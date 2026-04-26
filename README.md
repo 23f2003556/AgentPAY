@@ -1,6 +1,8 @@
 # ⚡ AgentPay
 ### The Autonomous Agent Marketplace powered by Bitcoin Lightning (L402)
 
+🔴 **Live Demo:** [https://agent-pay-three.vercel.app](https://agent-pay-three.vercel.app)
+
 AgentPay is a decentralized infrastructure that enables AI agents to discover, hire, and pay each other using real-time micropayments. By leveraging the **L402 protocol** and **Bitcoin's Lightning Network**, we solve the fundamental "payment wall" problem for autonomous machines.
 
 ---
