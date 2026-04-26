@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
         // Step 2: Compare
         send({ type: "step", index: 2, status: "running" });
         await sleep(800);
-        const summarizer = services?.find((s: any) => s.category === "summarization") || { name: "URL Summarizer", price_sats: 5, id: "demo" };
-        const oracle = services?.find((s: any) => s.category === "data-lookup") || { name: "BTC Price Oracle", price_sats: 2, id: "demo2" };
+        const summarizer = services?.find((s: { category: string }) => s.category === "summarization") || { name: "URL Summarizer", price_sats: 5, id: "demo" };
+        const oracle = services?.find((s: { category: string }) => s.category === "data-lookup") || { name: "BTC Price Oracle", price_sats: 2, id: "demo2" };
         send({ type: "step", index: 2, status: "done", detail: `Selected: ${summarizer.name} (${summarizer.price_sats}s) + ${oracle.name} (${oracle.price_sats}s)` });
 
         // Step 3: Pay for summarizer (real payment via AgentWallet)
@@ -78,8 +78,9 @@ export async function POST(req: NextRequest) {
           result: `TASK COMPLETED\n\nSummary of spiral.xyz:\n${sumData.summary}\n\nBTC Price:\nBitcoin is currently trading at approximately $${priceData.btc_usd.toLocaleString()} USD (+${priceData.change_24h_pct}% in the last 24h).\n\n---\nTotal cost: ${summarizer.price_sats + oracle.price_sats} sats\nPayment method: Lightning Network (L402)\nSettlement time: <2 seconds each`
         });
 
-      } catch (e: any) {
-        send({ type: "step", index: -1, status: "error", detail: e.message });
+      } catch (e: unknown) {
+        const error = e as Error;
+        send({ type: "step", index: -1, status: "error", detail: error.message });
         send({ type: "done", result: "Error running demo. Check console details." });
       }
       controller.close();

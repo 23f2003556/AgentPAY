@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { BlueprintBackground } from "@/components/ui/BlueprintBackground";
 
@@ -65,8 +65,21 @@ export default function Feed() {
     return () => es.close();
   }, []);
 
-  const last60s = payments.filter(p => (Date.now() - new Date(p.created_at).getTime()) < 60000);
-  const last60sSats = last60s.reduce((a, p) => a + (p.amount_sats || 0), 0);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 10000); // Update every 10s
+    return () => clearInterval(timer);
+  }, []);
+
+  const last60s = useMemo(() => 
+    payments.filter(p => (now - new Date(p.created_at).getTime()) < 60000),
+    [payments, now]
+  );
+  const last60sSats = useMemo(() => 
+    last60s.reduce((a, p) => a + (p.amount_sats || 0), 0),
+    [last60s]
+  );
 
   const statusBadge = (status: string) => {
     if (status === "confirmed") return (

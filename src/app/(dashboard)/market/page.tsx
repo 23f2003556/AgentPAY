@@ -60,8 +60,11 @@ export default function Marketplace() {
   const [showAll, setShowAll] = useState(false);
 
   const fetchServices = useCallback(async () => {
-    const params = new URLSearchParams({ sort: sortBy });
-    if (category !== "all") params.set("category", category);
+    setLoading(true);
+    setShowAll(false);
+    const params = new URLSearchParams();
+    if (category !== "all") params.append("category", category);
+    params.append("sort", sortBy);
     try {
       const res = await fetch(`/api/services?${params}`);
       const d = await res.json();
@@ -72,9 +75,10 @@ export default function Marketplace() {
   }, [category, sortBy]);
 
   useEffect(() => {
-    setLoading(true);
-    setShowAll(false);
-    fetchServices();
+    const t = setTimeout(() => {
+      fetchServices();
+    }, 0);
+    return () => clearTimeout(t);
   }, [fetchServices]);
 
   // Refresh stats every 30s

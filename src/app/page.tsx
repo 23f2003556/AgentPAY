@@ -3,18 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
-  Zap, 
-  Cpu, 
-  Globe, 
-  Lock, 
-  ArrowRight, 
-  ShieldCheck, 
-  Coins, 
-  Layers,
-  Activity,
   UserCheck,
-  TrendingUp,
-  DollarSign
+  DollarSign,
+  Zap,
+  Globe,
+  Lock
 } from "lucide-react";
 
 const fadeInUp = {

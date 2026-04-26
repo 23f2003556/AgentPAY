@@ -36,7 +36,7 @@ export class AgentWallet {
     if (challenge.status !== 402) return challenge;
 
     // Parse the payment challenge
-    const { paymentRequest, paymentHash } = await challenge.json();
+    const { paymentHash } = await challenge.json();
 
     // Pay the invoice via Hackathon Demo Simulation (bypassing Alby)
     console.log(`💸 Agent simulating payment...`);
