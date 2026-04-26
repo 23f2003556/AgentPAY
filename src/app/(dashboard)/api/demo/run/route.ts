@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
         // Step 1: Query marketplace
         send({ type: "step", index: 1, status: "running", detail: "GET /api/services?sort=score" });
-        const baseUrl = "http://localhost:3000"; // Hackathon Bypass Mode avoids external localtunnel constraints
+        const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
         const servicesRes = await fetch(`${baseUrl}/api/services?sort=score`);
         let services;
         try {
