@@ -42,7 +42,7 @@ export class AgentWallet {
     console.log(`💸 Agent simulating payment...`);
     
     // Simulate Alby hitting our webhook natively
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+    const baseUrl = new URL(url).origin;
     const payload = JSON.stringify({ type: "invoice.settled", data: { payment_hash: paymentHash } });
     const sig = crypto.createHmac("sha256", process.env.MDK_WEBHOOK_SECRET || "default_webhook_secret").update(payload).digest("hex");
     
@@ -56,7 +56,7 @@ export class AgentWallet {
     console.log(`✅ Agent simulated payment ${paymentHash.slice(0, 8)}...`);
 
     // Poll for token (webhook might take 1-2 seconds)
-    const token = await this.waitForToken(paymentHash);
+    const token = await this.waitForToken(paymentHash, baseUrl);
     this.tokenCache.set(url, token);
 
     // Retry the original request with the token
@@ -69,12 +69,10 @@ export class AgentWallet {
     });
   }
 
-  private async waitForToken(paymentHash: string, maxWait = 10000): Promise<string> {
+  private async waitForToken(paymentHash: string, origin: string, maxWait = 10000): Promise<string> {
     const start = Date.now();
-    // Always use localhost for server-to-server calls (NEXT_PUBLIC_APP_URL is the tunnel)
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
     while (Date.now() - start < maxWait) {
-      const res = await fetch(`${baseUrl}/api/token/${paymentHash}`);
+      const res = await fetch(`${origin}/api/token/${paymentHash}`);
       const data = await res.json();
       if (data.ready) return data.token;
       await new Promise(r => setTimeout(r, 500));

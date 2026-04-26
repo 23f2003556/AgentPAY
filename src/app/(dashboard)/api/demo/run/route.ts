@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
         // Step 1: Query marketplace
         send({ type: "step", index: 1, status: "running", detail: "GET /api/services?sort=score" });
-        const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+        const baseUrl = req.nextUrl.origin;
         const servicesRes = await fetch(`${baseUrl}/api/services?sort=score`);
         let services;
         try {

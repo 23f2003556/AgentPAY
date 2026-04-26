@@ -4,20 +4,29 @@
  * Token store: maps paymentHash → L402 token string.
  * Uses globalThis to survive Next.js hot reload.
  */
+import { supabaseAdmin } from "@/lib/platform/db";
 
 const g = globalThis as unknown as { __tokenStore?: Map<string, string> };
 const memoryStore = g.__tokenStore ?? (g.__tokenStore = new Map());
 
-async function recordPayment(body: object): Promise<void> {
-  const appUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+async function recordPayment(body: any): Promise<void> {
   try {
-    await fetch(`${appUrl}/api/payments/record`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    if (body.action === "create") {
+      await supabaseAdmin.from("payments").insert({
+        payment_hash: body.payment_hash,
+        service_id: body.service_id,
+        amount_sats: body.amount_sats,
+        buyer_id: body.buyer_id,
+        status: "pending"
+      });
+    } else if (body.action === "confirm") {
+      await supabaseAdmin.from("payments").update({
+        status: "confirmed",
+        confirmed_at: new Date().toISOString()
+      }).eq("payment_hash", body.payment_hash);
+    }
   } catch (err) {
-    console.warn("[token-store] /api/payments/record failed:", err);
+    console.warn("[token-store] DB operation failed:", err);
   }
 }
 
