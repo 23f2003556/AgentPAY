@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* Force light theme by re-mapping dark variant to a selector that never exists */
+@variant dark (&:where(.dark-mode-disabled, .dark-mode-disabled *));
+
+@theme inline {
+  --color-brand-orange: #f97316;
+  --color-brand-amber: #f59e0b;
+
+  /* Typography — Space Grotesk (sans) + JetBrains Mono (mono) */
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), "Fira Code", "Cascadia Code", monospace;
+}
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+/* Removed dark media query to enforce pure light theme */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom animations for the live feed and agent steps */
+@keyframes flash-orange {
+  0% { box-shadow: 0 0 0 0px rgba(249, 115, 22, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.4); }
+  100% { box-shadow: 0 0 0 0px rgba(249, 115, 22, 0); }
+}
+.animate-flash-orange {
+  animation: flash-orange 1s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Headline shimmer — sweeps orange→amber→slate across text once on load */
+@keyframes shimmer-sweep {
+  0%   { background-position: 150% center; }
+  100% { background-position: -150% center; }
+}
+.headline-shimmer {
+  background: linear-gradient(90deg, #0f172a 30%, #f97316 50%, #f59e0b 60%, #0f172a 80%);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-sweep 1.8s ease-out forwards;
+}
+
+/* Word stagger — used for "List a Service" title reveal */
+@keyframes word-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.word-reveal span {
+  display: inline-block;
+  opacity: 0;
+  animation: word-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.word-reveal span:nth-child(1) { animation-delay: 0ms; }
+.word-reveal span:nth-child(2) { animation-delay: 80ms; }
+.word-reveal span:nth-child(3) { animation-delay: 160ms; }
+
+
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Decorative Backgrounds */
+.bg-grid-blueprint {
+  background-size: 30px 30px;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+}
+
+.dark .bg-grid-blueprint {
+  background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+  animation: scanline 8s linear infinite;
+}
+
