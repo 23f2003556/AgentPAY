@@ -11,7 +11,7 @@ const memoryStore = g.__tokenStore ?? (g.__tokenStore = new Map());
 async function recordPayment(body: object): Promise<void> {
   // Always use localhost for internal server-to-server calls —
   // NEXT_PUBLIC_APP_URL may be an external tunnel URL which hangs if not active
-  const appUrl = "http://localhost:3000";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   try {
     await fetch(`${appUrl}/api/payments/record`, {
       method: "POST",

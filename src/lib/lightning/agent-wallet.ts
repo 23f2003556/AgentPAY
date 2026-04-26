@@ -42,7 +42,7 @@ export class AgentWallet {
     console.log(`💸 Agent simulating payment...`);
     
     // Simulate Alby hitting our webhook natively
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const payload = JSON.stringify({ type: "invoice.settled", data: { payment_hash: paymentHash } });
     const sig = crypto.createHmac("sha256", process.env.MDK_WEBHOOK_SECRET || "default_webhook_secret").update(payload).digest("hex");
     
@@ -72,7 +72,7 @@ export class AgentWallet {
   private async waitForToken(paymentHash: string, maxWait = 10000): Promise<string> {
     const start = Date.now();
     // Always use localhost for server-to-server calls (NEXT_PUBLIC_APP_URL is the tunnel)
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     while (Date.now() - start < maxWait) {
       const res = await fetch(`${baseUrl}/api/token/${paymentHash}`);
       const data = await res.json();
