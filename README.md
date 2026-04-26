@@ -28,11 +28,9 @@ AI agents currently lack a native way to pay for digital services without human 
    npm install
    ```
 2. **Environment Variables**:
-   Create a `.env.local` based on the shared integration contract:
-   ```env
-   ALBY_ACCESS_TOKEN=your_token
-   NEXT_PUBLIC_SUPABASE_URL=your_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+   Copy `.env.example` to `.env.local` and fill in your credentials:
+   ```bash
+   cp .env.example .env.local
    ```
 3. **Start Development**:
    ```bash
