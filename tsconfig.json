@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "lightning_engine", "platform_engine"]
+  "exclude": ["node_modules"]
 }
