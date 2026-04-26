@@ -1,7 +1,10 @@
 {
   "name": "agentpay",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "The autonomous machine economy powered by Bitcoin Lightning (L402).",
   "private": true,
+  "author": "AgentPay Team",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

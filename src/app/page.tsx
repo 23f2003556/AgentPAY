@@ -21,7 +21,7 @@ const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: "easeOut" }
-};
+} as const;
 
 const SourceBadge = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a 
@@ -267,7 +267,7 @@ export default function LandingPage() {
           <p className="mt-20 text-xl font-medium max-w-2xl mx-auto opacity-90 leading-relaxed italic">
             &quot;The only payment primitive that returns a challenge inside an HTTP 402 response—allowing agents to solve paywalls programmatically in milliseconds.&quot;
             <br />
-            <span className="mt-4 block"><SourceBadge href="https://lightning.engineering/l402">L402 Protocol Spec</SourceBadge></span>
+            <span className="mt-4 block"><SourceBadge href="https://l402.org">L402 Protocol Spec</SourceBadge></span>
           </p>
         </div>
       </section>
