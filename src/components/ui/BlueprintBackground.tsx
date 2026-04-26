@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 export function BlueprintBackground({ type = "grid" }: { type?: "grid" | "monitor" | "schematic" | "brain" }) {
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none">

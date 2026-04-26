@@ -11,8 +11,7 @@ export async function GET() {
       currency: "BTC",
       lightning_address: "agent_demo@getalby.com"
     });
-  } catch (e: unknown) {
-    const error = e as Error;
-    return NextResponse.json({ error: error.message }, { status: 502 });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 502 });
   }
 }

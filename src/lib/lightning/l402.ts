@@ -99,8 +99,7 @@ export async function l402Guard(
         },
       }
     );
-  } catch (e: unknown) {
-    const error = e as Error;
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }

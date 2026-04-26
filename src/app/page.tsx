@@ -3,18 +3,25 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
+  Zap, 
+  Cpu, 
+  Globe, 
+  Lock, 
+  ArrowRight, 
+  ShieldCheck, 
+  Coins, 
+  Layers,
+  Activity,
   UserCheck,
-  DollarSign,
-  Zap,
-  Globe,
-  Lock
+  TrendingUp,
+  DollarSign
 } from "lucide-react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: "easeOut" }
-} as const;
+};
 
 const SourceBadge = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a 

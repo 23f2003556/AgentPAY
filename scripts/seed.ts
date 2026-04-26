@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import "dotenv/config";
+require("dotenv").config({ path: ".env.local" });
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
