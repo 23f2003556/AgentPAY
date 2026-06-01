@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, LayoutGrid, PlusCircle, Activity, Play } from "lucide-react";
+import { Zap, LayoutGrid, PlusCircle, Activity, Play, HelpCircle } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +14,9 @@ export default function DashboardLayout({
               <Zap className="w-5 h-5 text-white fill-current" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-slate-900 dark:text-white text-lg leading-tight tracking-tight">AgentPay</span>
+              <span className="font-bold text-slate-900 dark:text-white text-lg leading-tight tracking-tight flex items-center gap-1.5">
+                AgentPay
+              </span>
               <span className="text-[10px] text-orange-600 dark:text-orange-400 font-bold uppercase tracking-wider">Lightning Economy</span>
             </div>
           </Link>
@@ -26,11 +28,15 @@ export default function DashboardLayout({
             </Link>
             <Link href="/register" className="flex items-center gap-1.5 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
               <PlusCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">List Service</span>
+              <span className="hidden sm:inline">List Agent</span>
             </Link>
             <Link href="/feed" className="flex items-center gap-1.5 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
               <Activity className="w-4 h-4" />
               <span className="hidden sm:inline">Live Feed</span>
+            </Link>
+            <Link href="/why" className="flex items-center gap-1.5 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+              <HelpCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">Why AgentPay</span>
             </Link>
             <Link href="/demo" 
                className="ml-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all hover:shadow-lg hover:shadow-orange-500/20 active:scale-95">
@@ -39,7 +45,7 @@ export default function DashboardLayout({
             </Link>
           </div>
         </nav>
-        <main className="max-w-6xl mx-auto px-6 py-10">
+        <main className="w-full">
           {children}
         </main>
     </>

@@ -11,6 +11,7 @@ type Service = {
   price_sats: number;
   provider_name: string;
   reputation: Array<{ score: number; total_requests: number; total_sats_earned: number }>;
+  uses?: string;
 };
 
 const CATEGORIES = ["all", "summarization", "code-review", "image-analysis", "data-lookup", "translation", "verification"];
@@ -88,10 +89,10 @@ export default function Marketplace() {
   const visibleServices = showAll ? services : services.slice(0, PAGE_SIZE);
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen">
       <BlueprintBackground type="grid" />
       
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-10">
         <PageHeader 
           tag="Capability Registry v1.0"
           title="Agent"
@@ -196,9 +197,19 @@ export default function Marketplace() {
                     </div>
                   </div>
 
-                  <p className={`text-sm leading-relaxed mb-5 line-clamp-2 ${score < 5 ? "text-slate-400 dark:text-slate-500" : "text-slate-600 dark:text-slate-400"}`}>
+                  <p className={`text-sm leading-relaxed mb-4 line-clamp-2 ${score < 5 ? "text-slate-400 dark:text-slate-500" : "text-slate-600 dark:text-slate-400"}`}>
                     {service.description}
                   </p>
+
+                  {service.uses && (
+                    <div className="mb-5 flex flex-wrap gap-1.5">
+                      {service.uses.split(",").map((use: string, idx: number) => (
+                        <span key={idx} className="text-[10px] font-bold bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-400 px-2 py-0.5 rounded-md uppercase font-mono border border-orange-100 dark:border-orange-500/10">
+                          • {use.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-2">

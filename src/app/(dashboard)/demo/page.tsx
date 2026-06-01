@@ -101,6 +101,9 @@ export default function DemoPage() {
           for (const line of block.split("\n").filter(l => l.startsWith("data: "))) {
             try {
               const event = JSON.parse(line.slice(6));
+              if (event.type === "init") {
+                setSteps(event.steps);
+              }
               if (event.type === "step") {
                 if (event.index === -1) setErrorBanner(event.detail);
                 else updateStep(event.index, { status: event.status, detail: event.detail });
@@ -123,10 +126,10 @@ export default function DemoPage() {
   const hasRun = steps.length > 0;
 
   return (
-    <div className="relative">
-      <BlueprintBackground type="brain" />
+    <div className="relative min-h-screen">
+      <BlueprintBackground type="grid" />
 
-      <div className="relative z-10 max-w-3xl mx-auto py-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-8">
         <div className="text-center mb-10">
           <style>{`
             @keyframes countUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
